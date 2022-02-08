@@ -65,14 +65,20 @@ Future<String> login() async{
     'password': 'password'
   };
 
-  final client = BrowserClient()..withCredentials = true;   // this is the key to store cookies onto the browser
+  Client client = Client();
+  if(client is BrowserClient) {
+    client.withCredentials = true;  // this is the key to store cookies onto the browser
+  }
   Response res =  await client.post(Uri.parse('http://yourserver.com'), body: loginData);  //change url to your server url
 
   return res.body.toString();
 }
 
 Future<String> getRequest() async{
-  final client = BrowserClient()..withCredentials = true;   // this is the key for using the stored cookies from the browser
+  Client client = Client();
+  if(client is BrowserClient) {
+    client.withCredentials = true;  // this is the key for using the stored cookies from the browser
+  }
   Response res =  await client.get(Uri.parse('http://yourserver.com'));   //change url to your server url
 
   return res.body.toString();
